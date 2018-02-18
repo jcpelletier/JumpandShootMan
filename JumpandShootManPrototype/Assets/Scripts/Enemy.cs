@@ -16,10 +16,11 @@ public class Enemy : MonoBehaviour {
 
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
-
+    public Transform enemyDeathPrefab;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         startPosition = gameObject.transform.position;
         health = 4;
         player = GameObject.Find("Player");
@@ -46,6 +47,7 @@ public class Enemy : MonoBehaviour {
         health--;
         if (health <= 0)
         {
+            Instantiate(enemyDeathPrefab, gameObject.transform.position, gameObject.transform.rotation);
             gameObject.transform.position = startPosition;
             gameObject.SetActive(false);
         }
@@ -59,7 +61,7 @@ public class Enemy : MonoBehaviour {
             bulletSpawn.rotation);
 
         // Add velocity to the bullet
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20;
     }
 
     void OnCollisionEnter(Collision col)
@@ -72,7 +74,7 @@ public class Enemy : MonoBehaviour {
 
     IEnumerator shootOccasionally()
     {
-        int wait = 2 + Random.Range(0, 2);   
+        int wait = 1 + Random.Range(0, 2);   
         yield return new WaitForSeconds(wait);
         shoot();
         StartCoroutine("shootOccasionally");
