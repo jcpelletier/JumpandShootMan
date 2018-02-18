@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    //RPG Stats
     public int strength;
     public int dexterity;
     public int constitution;
@@ -12,18 +13,23 @@ public class Player : MonoBehaviour
     public int intelligence;
     public int charisma;
 
+    //Ability Bools
     public bool canjetpack;
     public bool cansprint;
     public bool canshield;
-
+   
+    //UI
     public Text healthLabelText;
     public Text energyLabelText;
     public Text manaLabelText;
     public Text fuelArmText;
-
+    
     public Slider healthSlider;
     public Slider manaSlider;
     public Slider energySlider;
+
+    //Sound
+    public AudioSource hitSound;
 
     private int health;
     private int healthMax;
@@ -33,6 +39,7 @@ public class Player : MonoBehaviour
     private int energyMax;
 
     private Rigidbody bod;
+
 
 	// Use this for initialization
 	void Start ()
@@ -118,6 +125,7 @@ public class Player : MonoBehaviour
 
     public void DecrementHealth()
     {
-        health--;
+        hitSound.Play();
+        health = health - 5;
     }
 }
