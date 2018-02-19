@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour {
     private Vector3 startPosition;
     public GameObject player;
 
-    private int playerStrength;
+    private int playerBravery;
     private int damage;
 
     public Slider healthSlider;
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour {
         startPosition = gameObject.transform.position;
         health = 4;
         player = GameObject.Find("Player");
-        playerStrength = player.GetComponent<Player>().strength;
+        playerBravery = player.GetComponent<Player>().bravery;
         StartCoroutine("shootOccasionally");
     }
 
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour {
     void Update () {
         healthSlider.value = health;
         healthSlider2.value = health;
-        damage = playerStrength;
+        damage = playerBravery;
         Debug.Log("Damage: " + damage);
     }
 
