@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour {
     public GameObject enemyOne;
     public GameObject enemyTwo;
+    public GameObject enemyThree;
+    public GameObject enemyFour;
 
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         StartCoroutine("checkLiving");
 
@@ -28,6 +29,16 @@ public class EnemyManager : MonoBehaviour {
         if (!enemyTwo.activeSelf)
         {
             enemyTwo.SetActive(true);
+            Debug.Log("Bring enemy back to the living");
+        }
+        if (!enemyThree.activeSelf)
+        {
+            enemyThree.SetActive(true);
+            Debug.Log("Bring enemy back to the living");
+        }
+        if (!enemyFour.activeSelf)
+        {
+            enemyFour.SetActive(true);
             Debug.Log("Bring enemy back to the living");
         }
         StartCoroutine("checkLiving");
