@@ -23,5 +23,6 @@ public class PlayerBullet : MonoBehaviour {
         Instantiate(explosionPrefab, pos, rot);
 
         gameObject.SetActive(false);
+        Debug.Log("Bullet Collision");
     }
 }

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour {
 
-    public GameObject shot1;
-    public GameObject shot2;
-    public GameObject shot3;
+    public GameObject shot;
 
     public GameObject shootPoint;
 
@@ -20,9 +18,9 @@ public class Shoot : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Vector3 shot1Start = shot1.transform.position;
-        Vector3 shot2Start = shot2.transform.position;
-        Vector3 shot3Start = shot3.transform.position;
+        //Vector3 shot1Start = shot1.transform.position;
+        //Vector3 shot2Start = shot2.transform.position;
+        //Vector3 shot3Start = shot3.transform.position;
         player = gameObject.GetComponent<Player>();
     }
 	
@@ -31,6 +29,7 @@ public class Shoot : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && player.manaSlider.value > 20)
         {
+            /*
             if (shotCounter == 1 && !shot1.activeInHierarchy)
             {
                 shot1.SetActive(false);
@@ -69,8 +68,23 @@ public class Shoot : MonoBehaviour {
 
 
             shotCounter++;
-
-        }
+            */
+            shoot();
             
+        }
+
+    }
+
+    public void shoot()
+    {
+        shootPoint.GetComponent<AudioSource>().Play();
+        player.DecrementMana();
+        var bullet = (GameObject)Instantiate(
+            shot,
+            shootPoint.transform.position,
+            shootPoint.transform.rotation);
+
+        // Add velocity to the bullet
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20;
     }
 }
