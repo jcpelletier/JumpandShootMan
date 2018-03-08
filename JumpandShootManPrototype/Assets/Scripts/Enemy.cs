@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : NetworkBehaviour
+{
+    [SyncVar]
     private int health;
+
     private Vector3 startPosition;
     public GameObject player;
 
@@ -24,8 +28,8 @@ public class Enemy : MonoBehaviour {
         startPosition = gameObject.transform.position;
         health = 4;
         player = GameObject.Find("Player");
-        playerBravery = player.GetComponent<Player>().bravery;
-        StartCoroutine("shootOccasionally");
+        playerBravery = player.GetComponent<PlayerStats>().bravery;
+        //StartCoroutine("shootOccasionally");
     }
 
     void OnEnable()
@@ -38,7 +42,8 @@ public class Enemy : MonoBehaviour {
         healthSlider.value = health;
         healthSlider2.value = health;
         damage = playerBravery;
-        Debug.Log("Damage: " + damage);
+        //
+        //"Damage: " + damage);
     }
 
     public void TakeDamage ()

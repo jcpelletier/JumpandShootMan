@@ -23,7 +23,7 @@ public class EnemyBullet : MonoBehaviour {
 
         if (collision.gameObject.name == "Player")
         {
-            collision.gameObject.GetComponent<Player>().DecrementHealth();
+            collision.gameObject.GetComponent<PlayerStats>().DecrementHealth();
         }
 
         gameObject.SetActive(false);
