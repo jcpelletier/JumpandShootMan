@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using Rewired;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -16,10 +17,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float smoothTime = 5f;
         public bool lockCursor = true;
 
+        private Player player; // The Rewired Player 
+        public int playerId = 0; // The Rewired player id of this character
 
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
         private bool m_cursorIsLocked = true;
+
+        void Awake()
+        {
+            Debug.Log("mouselook wake");
+            player = ReInput.players.GetPlayer(playerId);
+        }
 
         public void Init(Transform character, Transform camera)
         {
@@ -30,8 +39,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void LookRotation(Transform character, Transform camera)
         {
-            float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+            player = ReInput.players.GetPlayer(playerId);
+            float yRot = player.GetAxis("LookHorizontal") * XSensitivity;
+            float xRot = player.GetAxis("LookVertical") * YSensitivity;
 
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
