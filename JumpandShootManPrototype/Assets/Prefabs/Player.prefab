@@ -455,6 +455,7 @@ GameObject:
   - component: {fileID: 114719813024073574}
   - component: {fileID: 114056898614685316}
   - component: {fileID: 114974600260745430}
+  - component: {fileID: 114712914832330652}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1310,7 +1311,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1444034960124624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.948868, y: 1.073, z: 16.101866}
+  m_LocalPosition: {x: -8.481277, y: 0, z: 13.661154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4320103984619382}
@@ -1355,7 +1356,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1394246236547750}
   m_LocalRotation: {x: -0.493785, y: -0.5298544, z: -0.47008893, w: 0.50442755}
-  m_LocalPosition: {x: -0.141, y: 1.112, z: -0.293}
+  m_LocalPosition: {x: -0.144, y: 1.148, z: -0.294}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679891616203964}
@@ -1884,7 +1885,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1098587768465720}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ff00a874745f8f648bf63ec899cd7ce1, type: 3}
@@ -1964,7 +1965,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1444034960124624}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c37fb2cbaa2426642af949251e9b1cfa, type: 3}
@@ -3641,6 +3642,25 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114712914832330652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1444034960124624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 4320103984619382}
+  m_ChildIndex: 0
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_MovementThreshold: 0.001
+  m_InterpolateRotation: 0.5
+  m_InterpolateMovement: 0.5
 --- !u!114 &114715943443188860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7329,7 +7349,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1986546847956614}
   m_LocalRotation: {x: -0, y: 0.7125987, z: -0, w: 0.70157194}
-  m_LocalPosition: {x: 0, y: 0, z: -16.101866}
+  m_LocalPosition: {x: 0, y: 0, z: -6.9519653}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 224601317052589592}

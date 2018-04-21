@@ -241,7 +241,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()//this is being called but no rotation
         {
-            Debug.Log("Rotate");
+            //Debug.Log("Rotate");
             //Debug.log("rotateview");
             //avoids the mouse looking if the game is effectively paused
             if (Mathf.Abs(Time.timeScale) < float.Epsilon) return;
