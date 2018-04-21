@@ -79,15 +79,19 @@ public class AbilitiesShoot : NetworkBehaviour {
 
             shotCounter++;
             */
-            shoot();
             
+            if (isLocalPlayer)
+            {
+                Cmdshoot();
+                shootPoint.GetComponent<AudioSource>().Play();
+            }
         }
 
     }
 
-    public void shoot()
+    [Command]
+    public void Cmdshoot()
     {
-        shootPoint.GetComponent<AudioSource>().Play();
         playerstats.DecrementMana();
         var bullet = (GameObject)Instantiate(
             shot,
@@ -95,6 +99,29 @@ public class AbilitiesShoot : NetworkBehaviour {
             shootPoint.transform.rotation);
 
         // Add velocity to the bullet
+        NetworkServer.Spawn(bullet);
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20;
+        //gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * 200, ForceMode.Impulse);
+
+        
+    }
+
+    
+
+public void shoot()
+    {
+        if (isLocalPlayer)
+        {
+            shootPoint.GetComponent<AudioSource>().Play();
+            playerstats.DecrementMana();
+            var bullet = (GameObject)Instantiate(
+                shot,
+                shootPoint.transform.position,
+                shootPoint.transform.rotation);
+
+            // Add velocity to the bullet
+            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20;
+        }
+        
     }
 }

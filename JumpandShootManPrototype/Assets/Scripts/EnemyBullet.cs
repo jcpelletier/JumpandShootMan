@@ -10,23 +10,25 @@ public class EnemyBullet : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Awake ()
+    {
+        //gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 20;
+    }
 
     void OnCollisionEnter(Collision collision)
     {
         ContactPoint contact = collision.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
         Vector3 pos = contact.point;
-        Instantiate(explosionPrefab, pos, rot);
+        //Instantiate(explosionPrefab, pos, rot);
 
         if (collision.gameObject.name == "Player")
         {
+            Debug.Log("Bullet hit player");
             collision.gameObject.GetComponent<PlayerStats>().DecrementHealth();
         }
 
         gameObject.SetActive(false);
-        Debug.Log("EnemyBullet Collision");
+        Debug.Log("EnemyBullet Collided with not player");
     }
 }
