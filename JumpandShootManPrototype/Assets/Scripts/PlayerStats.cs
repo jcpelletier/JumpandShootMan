@@ -143,8 +143,9 @@ public class PlayerStats : NetworkBehaviour
 
     public void DecrementHealth()
     {
+        Debug.Log("Reducing health");
         hitSound.Play();
-        health = health - 5;
+        health = health - 25;
     }
 
     IEnumerator rollStats()
@@ -201,40 +202,40 @@ public class PlayerStats : NetworkBehaviour
         //Start displaying UI in sequence with results
         menuthudSound.Play();
         braveryLabelText.text = "Bravery: " + bravery.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         cunningLabelText.text = "Cunning: " + cunning.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         resolveLabelText.text = "Resolve: " + resolve.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         willpowerLabelText.text = "Willpower: " + willpower.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         intelligenceLabelText.text = "Intelligence: " + intelligence.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         arcaneLabelText.text = "Arcane: " + arcane.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         healthmaxLabelText.text = "Max Health: " + healthMax.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         manamaxLabelText.text = "Max Mana: " + manaMax.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         energymaxLabelText.text = "Max Energy: " + energyMax.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         energyregenLabelText.text = "Energy Regen: " + energyRegen.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         manaregenLabelText.text = "Mana Regen: " + manaRegen.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         damageLabelText.text = "Damage: " + damage.ToString();
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         fpsHud.SetActive(true);
         statsHud.SetActive(false);

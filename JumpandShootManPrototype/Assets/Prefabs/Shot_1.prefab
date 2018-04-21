@@ -311,7 +311,6 @@ GameObject:
   - component: {fileID: 33342589564050092}
   - component: {fileID: 114872566767911450}
   - component: {fileID: 54226087813949648}
-  - component: {fileID: 114260177091348694}
   - component: {fileID: 114662769718460708}
   - component: {fileID: 114641054413594700}
   - component: {fileID: 114506895971213530}
@@ -747,7 +746,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1850455691173070}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.5069466, y: -0.000000059604645, z: 7.782589}
+  m_LocalPosition: {x: -1.52, y: 0.63, z: -1.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4641590658255014}
@@ -1198,18 +1197,6 @@ MonoBehaviour:
   FadeOutSpeed: 0.1
   FadeOutAfterCollision: 1
   UseHideStatus: 0
---- !u!114 &114260177091348694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1850455691173070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7cc3953f93c9d74aabdae5ce80698d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 400010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
 --- !u!114 &114336722535885390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1322,7 +1309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7a81e334411e984b8f310e33068077d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 400010, guid: 645413a00f7bd0242bbd6d0e5eb6f439, type: 2}
 --- !u!114 &114662769718460708
 MonoBehaviour:
   m_ObjectHideFlags: 1
