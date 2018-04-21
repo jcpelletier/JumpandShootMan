@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 81054524217646386}
   - component: {fileID: 114328734226600864}
   - component: {fileID: 82560656793226068}
+  - component: {fileID: 45406209665103452}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -1311,7 +1312,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1444034960124624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.481277, y: 0, z: 13.661154}
+  m_LocalPosition: {x: 19.381622, y: 0, z: -27.532822}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4320103984619382}
@@ -1341,7 +1342,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1098587768465720}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: -0.037, y: 0.337, z: -0.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4679891616203964}
@@ -1589,6 +1590,14 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1315177004650716}
   m_Mesh: {fileID: 0}
+--- !u!45 &45406209665103452
+Skybox:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098587768465720}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 8c06be80088e35b42bdab69121353b8b, type: 2}
 --- !u!54 &54612413419780876
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -1965,7 +1974,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1444034960124624}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c37fb2cbaa2426642af949251e9b1cfa, type: 3}
@@ -7349,7 +7358,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1986546847956614}
   m_LocalRotation: {x: -0, y: 0.7125987, z: -0, w: 0.70157194}
-  m_LocalPosition: {x: 0, y: 0, z: -6.9519653}
+  m_LocalPosition: {x: 0, y: 0, z: 26.765526}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 224601317052589592}
