@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
-using Rewired;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -9,14 +8,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (CapsuleCollider))]
     public class RigidbodyFirstPersonController : MonoBehaviour
     {
-        private Player player; // The Rewired Player 
-        public int playerId = 0; // The Rewired player id of this character
-
         [Serializable]
         public class MovementSettings
         {
-            public float speed = 10.0F;
-            public float rotationSpeed = 100.0F;
             public float ForwardSpeed = 8.0f;   // Speed when walking forward
             public float BackwardSpeed = 4.0f;  // Speed when walking backwards
             public float StrafeSpeed = 4.0f;    // Speed when walking sideways
@@ -76,7 +70,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             public float groundCheckDistance = 0.01f; // distance for checking if the controller is grounded ( 0.01f seems to work best for this )
             public float stickToGroundHelperDistance = 0.5f; // stops the character
-            public float slowDownRate = 30f; // rate at which the controller comes to a stop when there is no input
+            public float slowDownRate = 20f; // rate at which the controller comes to a stop when there is no input
             public bool airControl; // can the user control the direction that is being moved in the air
             [Tooltip("set it to 0.1 or more if you get stuck in wall")]
             public float shellOffset; //reduce the radius by that ratio to avoid getting stuck in wall (a value of 0.1f is nice)
@@ -87,9 +81,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
-        public PlayerStats playerStats;
 
-        private CharacterController cc;
+
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
@@ -130,27 +123,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
-            playerStats = gameObject.GetComponent<PlayerStats>();
         }
 
 
         private void Update()
         {
             RotateView();
-            if (player.GetButtonDown("Jump") && !m_Jump)
+
+            if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
                 m_Jump = true;
             }
         }
 
-        void Awake()
-        {
-            // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
-            player = ReInput.players.GetPlayer(playerId);
-
-            // Get the character controller
-            cc = GetComponent<CharacterController>();
-        }
 
         private void FixedUpdate()
         {
@@ -159,14 +144,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
             {
-                // always move along the camera forward as it is the direction that it being aimed at //nah thats BS
+                // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward*input.y + cam.transform.right*input.x;
                 desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
 
                 desiredMove.x = desiredMove.x*movementSettings.CurrentTargetSpeed;
                 desiredMove.z = desiredMove.z*movementSettings.CurrentTargetSpeed;
                 desiredMove.y = desiredMove.y*movementSettings.CurrentTargetSpeed;
-
                 if (m_RigidBody.velocity.sqrMagnitude <
                     (movementSettings.CurrentTargetSpeed*movementSettings.CurrentTargetSpeed))
                 {
@@ -183,7 +167,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_RigidBody.drag = 0f;
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                     m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
-                    gameObject.GetComponent<AudioSource>().Play();
                     m_Jumping = true;
                 }
 
@@ -231,18 +214,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
             
             Vector2 input = new Vector2
                 {
-                    x = player.GetAxis("MoveHorizontal"),
-                    y = player.GetAxis("MoveVertical")
+                    x = CrossPlatformInputManager.GetAxis("Horizontal"),
+                    y = CrossPlatformInputManager.GetAxis("Vertical")
                 };
 			movementSettings.UpdateDesiredTargetSpeed(input);
             return input;
         }
 
 
-        private void RotateView()//this is being called but no rotation
+        private void RotateView()
         {
-            //Debug.Log("Rotate");
-            //Debug.log("rotateview");
             //avoids the mouse looking if the game is effectively paused
             if (Mathf.Abs(Time.timeScale) < float.Epsilon) return;
 
@@ -256,9 +237,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 // Rotate the rigidbody velocity to match the new direction that the character is looking
                 Quaternion velRotation = Quaternion.AngleAxis(transform.eulerAngles.y - oldYRotation, Vector3.up);
                 m_RigidBody.velocity = velRotation*m_RigidBody.velocity;
-
             }
-
         }
 
         /// sphere cast down just beyond the bottom of the capsule to see if the capsule is colliding round the bottom
@@ -270,18 +249,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
                                    ((m_Capsule.height/2f) - m_Capsule.radius) + advancedSettings.groundCheckDistance, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
                 m_IsGrounded = true;
-                playerStats.isgrounded = true;
                 m_GroundContactNormal = hitInfo.normal;
             }
             else
             {
                 m_IsGrounded = false;
-                playerStats.isgrounded = false;
                 m_GroundContactNormal = Vector3.up;
             }
             if (!m_PreviouslyGrounded && m_IsGrounded && m_Jumping)
             {
-                playerStats.isgrounded = false;
                 m_Jumping = false;
             }
         }
