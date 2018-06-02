@@ -59,37 +59,25 @@ public class PlayerStats : NetworkBehaviour
     //Sound
     public AudioSource hitSound;
     public AudioSource menuthudSound;
-    
-    //Network sync these values
-    [SyncVar]
-    public float health;
-    [SyncVar]
-    public float healthMax;
-    [SyncVar]
+
+    public int health;
+    public int healthMax;
     public float mana;
-    [SyncVar]
     public int manaMax;
-    [SyncVar]
     public float energy;
-    [SyncVar]
     public int energyMax;
-    [SyncVar]
     public int damage;
-    [SyncVar]
     public float manaRegen;
-    [SyncVar]
     public float energyRegen;
 
     //Player references
     //private GameObject playerController; 
     private Rigidbody bod;
     public Camera cam;
-    private Vector3 startPosition;
 
     // Use this for initialization
     void Start ()
-    {
-        startPosition = new Vector3(0, 7, 0);
+    {   
         StartCoroutine("rollStats");
         if (!isLocalPlayer)
         {
@@ -100,7 +88,9 @@ public class PlayerStats : NetworkBehaviour
 
     void Update()
     {
-
+        if (!isLocalPlayer) {
+            return;
+        }
         healthSlider.value = health;
         manaSlider.value = mana;
         energySlider.value = energy;
@@ -112,13 +102,11 @@ public class PlayerStats : NetworkBehaviour
         if (mana > manaMax)
         {
             mana = manaMax;
-            manaLabelText.text = mana.ToString();
         }
 
         if (energy > energyMax)
         {
             energy = energyMax;
-            energyLabelText.text = energy.ToString();
         }
 
         if (isAirControl == true)
@@ -128,81 +116,36 @@ public class PlayerStats : NetworkBehaviour
             gameObject.GetComponent<RigidbodyFirstPersonController>().advancedSettings.airControl = false;
         }
 
-        if (health <= 0)
-        {
-            CmdDeath();
-        }
 
     }
 
     void FixedUpdate()
     {
-        PassiveRegen();
-    }
-
-    [Command]
-    public void CmdDeath()
-    {
-       if (isLocalPlayer)
-       {
-            Debug.Log("death called");
-            //do death stuff?
-            gameObject.transform.position = startPosition;
-            health = healthMax;
-            healthLabelText.text = health.ToString();
-       }
         
+        PassiveRegen();
     }
 
     public void PassiveRegen()
     {
         energy = energy + 0.02f * resolve;
-        if (energy > energyMax)
-        {
-            energy = energyMax;
-            energyLabelText.text = energy.ToString();
-        }
         mana = mana + 0.02f * willpower;
-        if (mana > manaMax)
-        {
-            mana = manaMax;
-            manaLabelText.text = mana.ToString();
-        }
-        health = health + 0.02f * resolve;
-        if (health > healthMax)
-        {
-            health = healthMax;
-            healthLabelText.text = health.ToString();
-        }
     }
 
     public void DecrementMana()
     {
         mana = mana - 20;
-        manaLabelText.text = mana.ToString();
     }
 
     public void DecrementEnergy(float a)
     {
         energy = energy - a;
-        energyLabelText.text = energy.ToString();
     }
 
-    [Command]
-    public void CmdDecrementHealth()
+    public void DecrementHealth()
     {
-
         Debug.Log("Reducing health");
         hitSound.Play();
-        Debug.Log("Health was " + health.ToString());
-        health = health - 35;
-        Debug.Log("Health is now " + health.ToString());
-        healthLabelText.text = health.ToString();
-        if (health <= 0)
-        {
-            CmdDeath();
-        }
-
+        health = health - 25;
     }
 
     IEnumerator rollStats()
@@ -226,6 +169,7 @@ public class PlayerStats : NetworkBehaviour
          
         //fpsHud.SetActive(false);
 
+
         //roll stats
         bravery = 10 + Random.Range(0, 8);
         cunning = 10 + Random.Range(0, 8);
@@ -248,9 +192,8 @@ public class PlayerStats : NetworkBehaviour
         energyRegen = cunning / 10;
         manaRegen = willpower / 10;
 
-        //Set movement ability 
+        //Set movement ability
         canjetpack = true;
-
         //Set max fuel Displays
         healthLabelText.text = healthMax.ToString();
         energyLabelText.text = energyMax.ToString();
