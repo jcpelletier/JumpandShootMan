@@ -23,6 +23,9 @@ public class AbilitiesShoot : NetworkBehaviour {
 
     // Use this for initialization
     void Start () {
+        //Vector3 shot1Start = shot1.transform.position;
+        //Vector3 shot2Start = shot2.transform.position;
+        //Vector3 shot3Start = shot3.transform.position;
         playerstats = gameObject.GetComponent<PlayerStats>();
     }
 
@@ -80,7 +83,7 @@ public class AbilitiesShoot : NetworkBehaviour {
             if (isLocalPlayer)
             {
                 Cmdshoot();
-                //shootPoint.GetComponent<AudioSource>().Play();
+                shootPoint.GetComponent<AudioSource>().Play();
             }
         }
 
