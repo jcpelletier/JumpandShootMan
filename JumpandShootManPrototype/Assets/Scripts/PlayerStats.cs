@@ -198,7 +198,7 @@ public class PlayerStats : NetworkBehaviour
         health = health - 35;
         Debug.Log("Health is now " + health.ToString());
         healthLabelText.text = health.ToString();
-        if (health <= 0 && fpsHud.activeInHierarchy)
+        if (health <= 0)
         {
             CmdDeath();
         }
@@ -257,7 +257,7 @@ public class PlayerStats : NetworkBehaviour
         manaLabelText.text = manaMax.ToString();
 
         //Start displaying UI in sequence with results
-        menuthudSound.Play();
+        /*menuthudSound.Play();
         braveryLabelText.text = "Bravery: " + bravery.ToString();
         yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
@@ -292,11 +292,10 @@ public class PlayerStats : NetworkBehaviour
         yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         damageLabelText.text = "Damage: " + damage.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);*/
 
-        fpsHud.SetActive(true);
-        statsHud.SetActive(false);
-        canmove = true;
+        //fpsHud.SetActive(true);
+        //statsHud.SetActive(false);
 
         yield return null;
 
