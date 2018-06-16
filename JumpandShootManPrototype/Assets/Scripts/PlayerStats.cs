@@ -224,7 +224,7 @@ public class PlayerStats : NetworkBehaviour
         mana = 0;
         energy = 0;
          
-        //fpsHud.SetActive(false);
+        fpsHud.SetActive(false);
 
         //roll stats
         bravery = 10 + Random.Range(0, 8);
@@ -257,7 +257,7 @@ public class PlayerStats : NetworkBehaviour
         manaLabelText.text = manaMax.ToString();
 
         //Start displaying UI in sequence with results
-        /*menuthudSound.Play();
+        menuthudSound.Play();
         braveryLabelText.text = "Bravery: " + bravery.ToString();
         yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
@@ -292,10 +292,10 @@ public class PlayerStats : NetworkBehaviour
         yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         damageLabelText.text = "Damage: " + damage.ToString();
-        yield return new WaitForSeconds(0.5f);*/
+        yield return new WaitForSeconds(0.5f);
 
-        //fpsHud.SetActive(true);
-        //statsHud.SetActive(false);
+        fpsHud.SetActive(true);
+        statsHud.SetActive(false);
 
         yield return null;
 
