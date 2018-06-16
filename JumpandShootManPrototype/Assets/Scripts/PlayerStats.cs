@@ -59,25 +59,37 @@ public class PlayerStats : NetworkBehaviour
     //Sound
     public AudioSource hitSound;
     public AudioSource menuthudSound;
-
-    public int health;
-    public int healthMax;
+    
+    //Network sync these values
+    [SyncVar]
+    public float health;
+    [SyncVar]
+    public float healthMax;
+    [SyncVar]
     public float mana;
+    [SyncVar]
     public int manaMax;
+    [SyncVar]
     public float energy;
+    [SyncVar]
     public int energyMax;
+    [SyncVar]
     public int damage;
+    [SyncVar]
     public float manaRegen;
+    [SyncVar]
     public float energyRegen;
 
     //Player references
     //private GameObject playerController; 
     private Rigidbody bod;
     public Camera cam;
+    private Vector3 startPosition;
 
     // Use this for initialization
     void Start ()
-    {   
+    {
+        startPosition = new Vector3(0, 7, 0);
         StartCoroutine("rollStats");
         if (!isLocalPlayer)
         {
@@ -88,9 +100,7 @@ public class PlayerStats : NetworkBehaviour
 
     void Update()
     {
-        if (!isLocalPlayer) {
-            return;
-        }
+
         healthSlider.value = health;
         manaSlider.value = mana;
         energySlider.value = energy;
@@ -102,11 +112,13 @@ public class PlayerStats : NetworkBehaviour
         if (mana > manaMax)
         {
             mana = manaMax;
+            manaLabelText.text = mana.ToString();
         }
 
         if (energy > energyMax)
         {
             energy = energyMax;
+            energyLabelText.text = energy.ToString();
         }
 
         if (isAirControl == true)
@@ -116,35 +128,81 @@ public class PlayerStats : NetworkBehaviour
             gameObject.GetComponent<RigidbodyFirstPersonController>().advancedSettings.airControl = false;
         }
 
+        if (health <= 0)
+        {
+            CmdDeath();
+        }
 
     }
 
     void FixedUpdate()
     {
-        
         PassiveRegen();
+    }
+
+    [Command]
+    public void CmdDeath()
+    {
+       if (isLocalPlayer)
+       {
+            Debug.Log("death called");
+            //do death stuff?
+            gameObject.transform.position = startPosition;
+            health = healthMax;
+            healthLabelText.text = health.ToString();
+       }
+        
     }
 
     public void PassiveRegen()
     {
         energy = energy + 0.02f * resolve;
+        if (energy > energyMax)
+        {
+            energy = energyMax;
+            energyLabelText.text = energy.ToString();
+        }
         mana = mana + 0.02f * willpower;
+        if (mana > manaMax)
+        {
+            mana = manaMax;
+            manaLabelText.text = mana.ToString();
+        }
+        health = health + 0.02f * resolve;
+        if (health > healthMax)
+        {
+            health = healthMax;
+            healthLabelText.text = health.ToString();
+        }
     }
 
     public void DecrementMana()
     {
         mana = mana - 20;
+        manaLabelText.text = mana.ToString();
     }
 
     public void DecrementEnergy(float a)
     {
         energy = energy - a;
+        energyLabelText.text = energy.ToString();
     }
 
-    public void DecrementHealth()
+    [Command]
+    public void CmdDecrementHealth()
     {
+
+        Debug.Log("Reducing health");
         hitSound.Play();
-        health = health - 5;
+        Debug.Log("Health was " + health.ToString());
+        health = health - 35;
+        Debug.Log("Health is now " + health.ToString());
+        healthLabelText.text = health.ToString();
+        if (health <= 0)
+        {
+            CmdDeath();
+        }
+
     }
 
     IEnumerator rollStats()
@@ -166,8 +224,7 @@ public class PlayerStats : NetworkBehaviour
         mana = 0;
         energy = 0;
          
-        fpsHud.SetActive(false);
-
+        //fpsHud.SetActive(false);
 
         //roll stats
         bravery = 10 + Random.Range(0, 8);
@@ -191,53 +248,54 @@ public class PlayerStats : NetworkBehaviour
         energyRegen = cunning / 10;
         manaRegen = willpower / 10;
 
-        //Set movement ability
+        //Set movement ability 
         canjetpack = true;
+
         //Set max fuel Displays
         healthLabelText.text = healthMax.ToString();
         energyLabelText.text = energyMax.ToString();
         manaLabelText.text = manaMax.ToString();
 
         //Start displaying UI in sequence with results
-        menuthudSound.Play();
+        /*menuthudSound.Play();
         braveryLabelText.text = "Bravery: " + bravery.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         cunningLabelText.text = "Cunning: " + cunning.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         resolveLabelText.text = "Resolve: " + resolve.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         willpowerLabelText.text = "Willpower: " + willpower.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         intelligenceLabelText.text = "Intelligence: " + intelligence.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         arcaneLabelText.text = "Arcane: " + arcane.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         healthmaxLabelText.text = "Max Health: " + healthMax.ToString();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         menuthudSound.Play();
         manamaxLabelText.text = "Max Mana: " + manaMax.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         energymaxLabelText.text = "Max Energy: " + energyMax.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         energyregenLabelText.text = "Energy Regen: " + energyRegen.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         manaregenLabelText.text = "Mana Regen: " + manaRegen.ToString();
-        yield return new WaitForSeconds(0.5f); menuthudSound.Play();
+        yield return new WaitForSeconds(0.1f); menuthudSound.Play();
         menuthudSound.Play();
         damageLabelText.text = "Damage: " + damage.ToString();
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);*/
 
-        fpsHud.SetActive(true);
-        statsHud.SetActive(false);
+        //fpsHud.SetActive(true);
+        //statsHud.SetActive(false);
 
         yield return null;
 

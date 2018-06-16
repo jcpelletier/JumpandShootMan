@@ -5,15 +5,10 @@ using UnityEngine;
 public class PlayerBullet : MonoBehaviour {
     public Transform explosionPrefab;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake ()
+    {
+        //gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward, ForceMode.Impulse);
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -23,6 +18,6 @@ public class PlayerBullet : MonoBehaviour {
         Instantiate(explosionPrefab, pos, rot);
 
         gameObject.SetActive(false);
-        Debug.Log("Bullet Collision");
+        Debug.Log("Bullet Collision with "+collision.transform.name);
     }
 }
